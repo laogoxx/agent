@@ -4,10 +4,13 @@ set -e
 # 设置 Python 路径
 export PYTHONPATH=/opt/render/project/src:$PYTHONPATH
 
-# 初始化数据库（如果需要）
-if [ -f "scripts/init_db.py" ]; then
+# 进入 src 目录
+cd /opt/render/project/src
+
+# 初始化数据库
+if [ -f "../scripts/init_db.py" ]; then
     echo "初始化数据库..."
-    python scripts/init_db.py init
+    python ../scripts/init_db.py init
 fi
 
 # 启动服务
