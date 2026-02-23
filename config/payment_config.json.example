@@ -7,5 +7,14 @@
         "private_key_path": "config/certs/apiclient_key.pem",
         "cert_dir": "config/certs",
         "notify_url": "https://your-domain.com/api/pay/notify"
+    },
+    "simple_payment": {
+        "payment_method": "qrcode",
+        "wechat_qrcode_url": "https://your-image-host.com/wechat_qrcode.png",
+        "alipay_qrcode_url": "https://your-image-host.com/alipay_qrcode.png",
+        "wechat_account": "your_wechat_id",
+        "alipay_account": "your_alipay_id",
+        "price": 68.00,
+        "product_name": "OPC创业指导PDF"
     }
 }

@@ -10,7 +10,7 @@ from langchain_core.messages import AnyMessage, SystemMessage, HumanMessage, AIM
 from coze_coding_utils.runtime_ctx.context import default_headers, new_context
 from storage.memory.memory_saver import get_memory_saver
 from tools.pdf_generator import generate_opc_pdf
-from tools.payment_guide import show_payment_guide
+from tools.simple_payment import SIMPLE_PAYMENT_TOOLS
 from tools.wechat_group_info import get_wechat_group_info
 
 logger = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ def build_agent(ctx=None):
     # 导入所有工具
     tools = [
         generate_opc_pdf,
-        show_payment_guide,
+        *SIMPLE_PAYMENT_TOOLS,  # 添加收款工具（get_payment_qrcode, confirm_payment）
         get_wechat_group_info
     ]
     
