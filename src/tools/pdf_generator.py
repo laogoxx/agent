@@ -337,22 +337,39 @@ def generate_opc_pdf(
         story.append(Paragraph("以下是适合OPC使用的AI/Agent工具，可大幅提升效率：", normal_style))
         story.append(Spacer(1, 10))
         
-        # AI工具列表
+        # AI工具列表（分类展示）
         ai_tools = [
-            ("文心一言（国产）", "百度大模型", "文案生成/多模态创作", "免费/付费"),
-            ("通义千问（国产）", "阿里大模型", "文档分析/长文本生成", "免费/付费"),
-            ("即梦（国产）", "字节跳动", "AI短视频自动生成", "免费/付费"),
-            ("Coze（国产）", "字节跳动", "AI Agent工作流", "免费"),
-            ("Dify", "开源平台", "AI应用快速开发", "免费/付费"),
-            ("AutoGen", "微软", "多Agent协作系统", "免费"),
-            ("CrewAI", "开源工具", "Agent编排工具", "免费/付费"),
+            # 大模型类
+            ("文心一言（国产）", "百度", "文案生成/多模态创作", "免费/付费", "大模型"),
+            ("通义千问（国产）", "阿里", "文档分析/长文本生成", "免费/付费", "大模型"),
+            ("智谱清言（国产）", "智谱AI", "代码生成/逻辑推理", "免费/付费", "大模型"),
+            ("Copy.ai（可选）", "Copy.ai", "营销文案/广告创意", "付费", "大模型"),
+            
+            # 图像/视频生成类
+            ("即梦（国产）", "字节跳动", "AI短视频自动生成", "免费/付费", "视频生成"),
+            ("ImagineArt（可选）", "ImagineArt", "AI图像创作/设计", "免费/付费", "图像生成"),
+            ("HeyGen（可选）", "HeyGen", "AI数字人视频制作", "付费", "视频生成"),
+            ("Runway（可选）", "Runway", "AI视频编辑/特效", "付费", "视频生成"),
+            
+            # Agent/自动化类
+            ("Coze（国产）", "字节跳动", "AI Agent工作流", "免费", "Agent平台"),
+            ("CrewAI", "开源工具", "多Agent协作编排", "免费/付费", "Agent平台"),
+            ("AutoGen", "微软", "多Agent对话系统", "免费", "Agent平台"),
+            ("n8n", "开源工具", "工作流自动化/集成", "免费/付费", "自动化"),
+            ("Make（可选）", "Make", "可视化工作流自动化", "付费", "自动化"),
+            ("OpenCompass", "开源工具", "大模型评测/开发", "免费", "Agent平台"),
+            
+            # 数据管理类
+            ("飞书多维表格（国产）", "字节跳动", "数据管理/协作", "免费/付费", "数据管理"),
+            ("Notion（可选）", "Notion", "知识管理/协作", "免费/付费", "数据管理"),
+            ("Airtable（可选）", "Airtable", "在线数据库/表格", "免费/付费", "数据管理"),
         ]
         
-        ai_tool_data = [["工具名称", "开发商", "核心功能", "收费方式"]]
+        ai_tool_data = [["工具名称", "开发商", "核心功能", "收费方式", "类别"]]
         for tool in ai_tools:
             ai_tool_data.append(list(tool))
         
-        ai_table = Table(ai_tool_data, colWidths=[2*inch, 1.5*inch, 2*inch, 1*inch])
+        ai_table = Table(ai_tool_data, colWidths=[1.8*inch, 1.2*inch, 2*inch, 1*inch, 1*inch])
         ai_table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#2E86AB')),
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
