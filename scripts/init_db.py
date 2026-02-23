@@ -12,14 +12,22 @@ project_root = os.path.dirname(script_dir)
 # src 目录
 src_dir = os.path.join(project_root, 'src')
 
-# 确保 src 目录在 Python 路径中（避免重复添加）
-if src_dir not in sys.path:
-    sys.path.insert(0, src_dir)
+# 检查当前工作目录
+current_dir = os.getcwd()
+
+# 添加项目根目录和 src 目录到 Python 路径
+# 注意：不要重复添加
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
+if src_dir not in sys.path:
+    sys.path.insert(0, src_dir)
 
-# 确保工作目录在项目根目录
-os.chdir(project_root)
+# 如果当前已经在 src 目录中，使用项目根目录作为工作目录
+# 否则，使用 src 目录作为工作目录
+if current_dir.endswith('src'):
+    os.chdir(project_root)
+else:
+    os.chdir(src_dir)
 
 # 导入模块
 from sqlalchemy import text
@@ -32,7 +40,12 @@ logger = logging.getLogger(__name__)
 
 def init_customer_tables():
     """初始化客户信息相关数据表"""
-    engine = get_engine()
+    try:
+        engine = get_engine()
+    except Exception as e:
+        print(f"✗ 无法获取数据库引擎: {e}")
+        print("请检查 DATABASE_URL 环境变量是否正确设置")
+        raise
 
     try:
         # 创建所有表

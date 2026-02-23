@@ -19,6 +19,11 @@ def get_db_url() -> str:
     # 优先使用 Render 的 DATABASE_URL 环境变量
     url = os.getenv("DATABASE_URL") or os.getenv("PGDATABASE_URL") or ""
 
+    # 添加调试日志
+    logger.info(f"DATABASE_URL env: {'Set' if os.getenv('DATABASE_URL') else 'Not set'}")
+    logger.info(f"PGDATABASE_URL env: {'Set' if os.getenv('PGDATABASE_URL') else 'Not set'}")
+    logger.info(f"Retrieved URL (first 50 chars): {url[:50] if url else 'Empty'}")
+
     if url:
         return url
 
