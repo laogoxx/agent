@@ -8,6 +8,10 @@ import json
 import logging
 from typing import Dict, Optional
 from langchain.tools import tool
+from dotenv import load_dotenv
+
+# 加载.env文件
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 
