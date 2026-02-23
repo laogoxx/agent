@@ -12,4 +12,4 @@ fi
 
 # 启动服务
 echo "启动 OPC Agent 服务..."
-gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile - src.main_flask:app
+gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile - main_flask:app

@@ -5,7 +5,7 @@ import sys
 # 添加项目根目录到Python路径
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from src.agents.agent import build_agent
+from agents.agent import build_agent
 from langgraph.checkpoint.memory import MemorySaver
 
 app = Flask(__name__)
