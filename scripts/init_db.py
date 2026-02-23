@@ -2,9 +2,16 @@
 数据库初始化脚本
 创建客户信息相关的数据表
 """
+import sys
+import os
+
+# 添加项目根目录到 Python 路径
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, project_root)
+
 from sqlalchemy import text
-from src.storage.database.db import get_engine
-from src.storage.database.customer_models import Base
+from storage.database.db import get_engine
+from storage.database.customer_models import Base
 import logging
 
 logger = logging.getLogger(__name__)
@@ -60,8 +67,6 @@ def drop_customer_tables():
 
 
 if __name__ == "__main__":
-    import sys
-
     action = sys.argv[1] if len(sys.argv) > 1 else "init"
 
     if action == "init":
