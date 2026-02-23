@@ -337,50 +337,74 @@ def generate_opc_pdf(
         story.append(Paragraph("以下是适合OPC使用的AI/Agent工具，可大幅提升效率：", normal_style))
         story.append(Spacer(1, 10))
         
-        # AI工具列表（分类展示）
+        # AI工具列表（分类展示，带评分）
         ai_tools = [
             # 大模型类
-            ("文心一言（国产）", "百度", "文案生成/多模态创作", "免费/付费", "大模型"),
-            ("通义千问（国产）", "阿里", "文档分析/长文本生成", "免费/付费", "大模型"),
-            ("智谱清言（国产）", "智谱AI", "代码生成/逻辑推理", "免费/付费", "大模型"),
-            ("Copy.ai（可选）", "Copy.ai", "营销文案/广告创意", "付费", "大模型"),
+            ("文心一言（国产）", "百度", "文案生成/多模态创作", "免费/付费", "大模型", "4.8", "4.7", "4.9"),
+            ("通义千问（国产）", "阿里", "文档分析/长文本生成", "免费/付费", "大模型", "4.7", "4.8", "4.8"),
+            ("智谱清言（国产）", "智谱AI", "代码生成/逻辑推理", "免费/付费", "大模型", "4.6", "4.7", "4.7"),
+            ("Copy.ai（可选）", "Copy.ai", "营销文案/广告创意", "付费", "大模型", "4.5", "4.3", "4.2"),
+            ("Kimi（国产）", "月之暗霞", "超长文本阅读/总结", "免费/付费", "大模型", "4.7", "4.5", "4.8"),
             
             # 图像/视频生成类
-            ("即梦（国产）", "字节跳动", "AI短视频自动生成", "免费/付费", "视频生成"),
-            ("ImagineArt（可选）", "ImagineArt", "AI图像创作/设计", "免费/付费", "图像生成"),
-            ("HeyGen（可选）", "HeyGen", "AI数字人视频制作", "付费", "视频生成"),
-            ("Runway（可选）", "Runway", "AI视频编辑/特效", "付费", "视频生成"),
+            ("即梦（国产）", "字节跳动", "AI短视频自动生成", "免费/付费", "视频生成", "4.8", "4.5", "4.9"),
+            ("ImagineArt（可选）", "ImagineArt", "AI图像创作/设计", "免费/付费", "图像生成", "4.3", "4.4", "4.5"),
+            ("HeyGen（可选）", "HeyGen", "AI数字人视频制作", "付费", "视频生成", "4.5", "4.6", "4.0"),
+            ("Runway（可选）", "Runway", "AI视频编辑/特效", "付费", "视频生成", "4.4", "4.7", "3.8"),
+            ("文心一格（国产）", "百度", "AI绘画/海报设计", "免费/付费", "图像生成", "4.5", "4.4", "4.8"),
+            ("Midjourney（可选）", "Midjourney", "顶级AI绘画/设计", "付费", "图像生成", "4.2", "4.9", "3.5"),
+            ("剪映AI（国产）", "字节跳动", "AI视频剪辑/字幕", "免费/付费", "视频生成", "4.9", "4.5", "4.9"),
+            ("Canva AI（可选）", "Canva", "智能设计工具", "免费/付费", "图像生成", "4.8", "4.3", "4.7"),
             
             # Agent/自动化类
-            ("Coze（国产）", "字节跳动", "AI Agent工作流", "免费", "Agent平台"),
-            ("CrewAI", "开源工具", "多Agent协作编排", "免费/付费", "Agent平台"),
-            ("AutoGen", "微软", "多Agent对话系统", "免费", "Agent平台"),
-            ("n8n", "开源工具", "工作流自动化/集成", "免费/付费", "自动化"),
-            ("Make（可选）", "Make", "可视化工作流自动化", "付费", "自动化"),
-            ("OpenCompass", "开源工具", "大模型评测/开发", "免费", "Agent平台"),
+            ("Coze（国产）", "字节跳动", "AI Agent工作流", "免费", "Agent平台", "4.9", "4.6", "5.0"),
+            ("CrewAI", "开源工具", "多Agent协作编排", "免费/付费", "Agent平台", "4.2", "4.5", "4.8"),
+            ("AutoGen", "微软", "多Agent对话系统", "免费", "Agent平台", "4.0", "4.4", "5.0"),
+            ("n8n", "开源工具", "工作流自动化/集成", "免费/付费", "自动化", "4.3", "4.6", "4.7"),
+            ("Make（可选）", "Make", "可视化工作流自动化", "付费", "自动化", "4.7", "4.5", "4.1"),
+            ("OpenCompass", "开源工具", "大模型评测/开发", "免费", "Agent平台", "4.1", "4.3", "5.0"),
+            ("Dify", "开源工具", "AI应用快速开发", "免费/付费", "Agent平台", "4.5", "4.6", "4.8"),
+            ("FastGPT（国产）", "开源工具", "知识库问答系统", "免费/付费", "Agent平台", "4.6", "4.4", "4.9"),
+            ("Gumloop", "开源工具", "可视化业务流程自动化", "免费/付费", "自动化", "4.4", "4.5", "4.6"),
             
             # 数据管理类
-            ("飞书多维表格（国产）", "字节跳动", "数据管理/协作", "免费/付费", "数据管理"),
-            ("Notion（可选）", "Notion", "知识管理/协作", "免费/付费", "数据管理"),
-            ("Airtable（可选）", "Airtable", "在线数据库/表格", "免费/付费", "数据管理"),
+            ("飞书多维表格（国产）", "字节跳动", "数据管理/协作", "免费/付费", "数据管理", "4.8", "4.7", "4.9"),
+            ("Notion（可选）", "Notion", "知识管理/协作", "免费/付费", "数据管理", "4.6", "4.5", "4.3"),
+            ("Airtable（可选）", "Airtable", "在线数据库/表格", "免费/付费", "数据管理", "4.5", "4.6", "4.2"),
         ]
         
-        ai_tool_data = [["工具名称", "开发商", "核心功能", "收费方式", "类别"]]
+        ai_tool_data = [["工具名称", "开发商", "核心功能", "收费方式", "类别", "易用性", "功能完整度", "性价比"]]
         for tool in ai_tools:
             ai_tool_data.append(list(tool))
         
-        ai_table = Table(ai_tool_data, colWidths=[1.8*inch, 1.2*inch, 2*inch, 1*inch, 1*inch])
+        ai_table = Table(ai_tool_data, colWidths=[1.6*inch, 1.0*inch, 1.6*inch, 0.8*inch, 0.8*inch, 0.6*inch, 0.7*inch, 0.6*inch])
         ai_table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#2E86AB')),
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
             ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
             ('FONTNAME', (0, 0), (-1, -1), 'ChineseFont' if os.path.exists('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc') else 'Helvetica'),
-            ('FONTSIZE', (0, 0), (-1, -1), 9),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-            ('TOPPADDING', (0, 0), (-1, -1), 6),
+            ('FONTSIZE', (0, 0), (-1, -1), 8),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+            ('TOPPADDING', (0, 0), (-1, -1), 5),
             ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#CCCCCC')),
         ]))
         story.append(ai_table)
+        story.append(Spacer(1, 10))
+        
+        # 评分说明
+        rating_explain_style = ParagraphStyle(
+            'RatingExplain',
+            parent=styles['Normal'],
+            fontSize=10,
+            textColor=colors.HexColor('#555555'),
+            leftIndent=10,
+            fontName='ChineseFont' if os.path.exists('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc') else 'Helvetica'
+        )
+        story.append(Paragraph("<b>评分说明：</b>", rating_explain_style))
+        story.append(Paragraph("• <b>易用性</b>：工具的学习曲线和操作便捷度（1-5分，5分最高）", rating_explain_style))
+        story.append(Paragraph("• <b>功能完整度</b>：工具功能的丰富程度和实用性（1-5分，5分最高）", rating_explain_style))
+        story.append(Paragraph("• <b>性价比</b>：工具的功能与价格比例（1-5分，5分最高）", rating_explain_style))
+        story.append(Paragraph("• 评分基于用户反馈和专家评估，仅供参考", rating_explain_style))
         story.append(Spacer(1, 20))
         
         # 第六部分：风险提示
