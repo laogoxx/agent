@@ -225,4 +225,4 @@ def generate_opc_pdf_simple(
         error_details = traceback.format_exc()
         return f"❌ 生成PDF失败：{str(e)}\n\n详细信息：\n{error_details}"
 
-  feat: 添加 pdf_generator_simple.py，简化 PDF 生成
+    
