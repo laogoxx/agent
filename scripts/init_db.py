@@ -5,27 +5,37 @@
 import sys
 import os
 
-# 添加多个可能的路径到 Python 路径，确保能找到模块
+# 脚本所在目录
 script_dir = os.path.dirname(os.path.abspath(__file__))
+# 项目根目录
 project_root = os.path.dirname(script_dir)
+# src 目录
 src_dir = os.path.join(project_root, 'src')
 
-# 添加项目根目录、src 目录和当前目录到 Python 路径
-sys.path.insert(0, project_root)
-sys.path.insert(0, src_dir)
-sys.path.insert(0, script_dir)
+# 检查当前工作目录
+current_dir = os.getcwd()
 
-# 确保工作目录正确
-os.chdir(src_dir)
+# 添加项目根目录和 src 目录到 Python 路径
+# 注意：不要重复添加
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+if src_dir not in sys.path:
+    sys.path.insert(0, src_dir)
 
-# 导入模块（使用 try-except 处理构建阶段的导入错误）
-try:
-    from sqlalchemy import text
-    from storage.database.db import get_engine
-    from storage.database.customer_models import Base
-    import logging
+# 如果当前已经在 src 目录中，使用项目根目录作为工作目录
+# 否则，使用 src 目录作为工作目录
+if current_dir.endswith('src'):
+    os.chdir(project_root)
+else:
+    os.chdir(src_dir)
 
-    logger = logging.getLogger(__name__)
+# 导入模块
+from sqlalchemy import text
+from storage.database.db import get_engine
+from storage.database.customer_models import Base
+import logging
+
+logger = logging.getLogger(__name__)
 except ImportError as e:
     # 构建阶段可能无法导入模块，记录警告但不退出
     if __name__ != "__main__":
@@ -38,7 +48,12 @@ except ImportError as e:
 
 def init_customer_tables():
     """初始化客户信息相关数据表"""
-    engine = get_engine()
+    try:
+        engine = get_engine()
+    except Exception as e:
+        print(f"✗ 无法获取数据库引擎: {e}")
+        print("请检查 DATABASE_URL 环境变量是否正确设置")
+        raise
 
     try:
         # 创建所有表
