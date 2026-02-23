@@ -327,4 +327,3 @@ def save_recommendations(
 
 推荐项目已保存到数据库，便于后续查询和统计。"""
 
-fix: 更新 customer_db_tools.py，移除 new_context 导入
