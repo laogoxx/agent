@@ -4,7 +4,6 @@
 import json
 from typing import Dict, Any, Optional
 from langchain.tools import tool, ToolRuntime
-from coze_coding_utils.runtime_ctx.context import new_context
 
 from storage.database.customer_crud import (
     save_customer_info,
