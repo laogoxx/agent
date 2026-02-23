@@ -1,0 +1,19 @@
+# ========================================
+# Render 环境变量配置
+# ========================================
+# 在 Render 控制台的 Environment 中添加这些变量
+
+# 数据库配置（创建 PostgreSQL 后，将 Internal Database URL 填入）
+DATABASE_URL=postgresql://用户名:密码@主机:端口/数据库名
+
+# 微信支付配置
+WECHAT_QRCODE_URL=https://ibb.co/0y0jXhCv
+WECHAT_GROUP_QRCODE_URL=https://ibb.co/PZrnNCT2
+
+# 产品配置
+PAYMENT_PRICE=68.00
+PRODUCT_NAME=OPC创业指导PDF
+
+# 模型配置（从你的开发环境获取）
+COZE_WORKLOAD_IDENTITY_API_KEY=your_api_key_here
+COZE_INTEGRATION_MODEL_BASE_URL=your_base_url_here

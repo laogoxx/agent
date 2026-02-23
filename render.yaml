@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: opc-agent
+    env: python
+    runtime: python-3.11.8
+    buildCommand: pip install -r requirements.txt && python scripts/init_db.py init
+    startCommand: bash .render/start.sh
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: opc-agent-db
+          property: connectionString
+      - key: WECHAT_QRCODE_URL
+        value: https://ibb.co/0y0jXhCv
+      - key: WECHAT_GROUP_QRCODE_URL
+        value: https://ibb.co/PZrnNCT2
+      - key: PAYMENT_PRICE
+        value: 68.00
+      - key: PRODUCT_NAME
+        value: OPC创业指导PDF
+    healthCheckPath: /api/health
+
+databases:
+  - name: opc-agent-db
+    databaseName: opc_agent
+    user: opc_user
