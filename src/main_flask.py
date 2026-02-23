@@ -126,4 +126,5 @@ def health():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    # 生产环境：关闭调试模式，使用多线程
+    app.run(host='0.0.0.0', port=port, debug=False, threaded=True)
