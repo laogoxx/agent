@@ -2,7 +2,7 @@ services:
   - type: web
     name: opc-agent
     env: python
-    runtime: python-3.11.8
+    # runtime 已移除，Render 会自动选择最新稳定版本的 Python
     buildCommand: pip install -r requirements.txt && python scripts/init_db.py init
     startCommand: bash .render/start.sh
     envVars:
@@ -18,6 +18,11 @@ services:
         value: 68.00
       - key: PRODUCT_NAME
         value: OPC创业指导PDF
+      # 模型配置
+      - key: COZE_WORKLOAD_IDENTITY_API_KEY
+        value: cxFUTVOlSslzc1B3jV5s6m2xL9nH8kW7qP4tY1rM0oZ5dC6fX3gE8vA2bN4wQ9sT7
+      - key: COZE_INTEGRATION_MODEL_BASE_URL
+        value: https://integration.coze.cn/api/v3
     healthCheckPath: /api/health
 
 databases:
