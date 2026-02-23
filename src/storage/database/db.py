@@ -16,25 +16,15 @@ except Exception:
 
 def get_db_url() -> str:
     """Build database URL from environment."""
-    url = os.getenv("PGDATABASE_URL") or ""
-    if url is not None and url != "":
+    # 优先使用 Render 的 DATABASE_URL 环境变量
+    url = os.getenv("DATABASE_URL") or os.getenv("PGDATABASE_URL") or ""
+
+    if url:
         return url
-    from coze_workload_identity import Client
-    try:
-        client = Client()
-        env_vars = client.get_project_env_vars()
-        client.close()
-        for env_var in env_vars:
-            if env_var.key == "PGDATABASE_URL":
-                url = env_var.value.replace("'", "'\\''")
-                return url
-    except Exception as e:
-        logger.error(f"Error loading PGDATABASE_URL: {e}")
-        raise e
-    finally:
-        if url is None or url == "":
-            logger.error("PGDATABASE_URL is not set")
-    return url
+
+    # 如果没有环境变量，尝试从其他来源获取（可选）
+    logger.error("DATABASE_URL or PGDATABASE_URL is not set")
+    raise ValueError("DATABASE_URL or PGDATABASE_URL is not set")
 _engine = None
 _SessionLocal = None
 

@@ -5,35 +5,29 @@
 import sys
 import os
 
-# 添加多个可能的路径到 Python 路径，确保能找到模块
+# 脚本所在目录
 script_dir = os.path.dirname(os.path.abspath(__file__))
+# 项目根目录
 project_root = os.path.dirname(script_dir)
+# src 目录
 src_dir = os.path.join(project_root, 'src')
 
-# 添加项目根目录、src 目录和当前目录到 Python 路径
-sys.path.insert(0, project_root)
-sys.path.insert(0, src_dir)
-sys.path.insert(0, script_dir)
+# 确保 src 目录在 Python 路径中（避免重复添加）
+if src_dir not in sys.path:
+    sys.path.insert(0, src_dir)
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
-# 确保工作目录正确
-os.chdir(src_dir)
+# 确保工作目录在项目根目录
+os.chdir(project_root)
 
-# 导入模块（使用 try-except 处理构建阶段的导入错误）
-try:
-    from sqlalchemy import text
-    from storage.database.db import get_engine
-    from storage.database.customer_models import Base
-    import logging
+# 导入模块
+from sqlalchemy import text
+from storage.database.db import get_engine
+from storage.database.customer_models import Base
+import logging
 
-    logger = logging.getLogger(__name__)
-except ImportError as e:
-    # 构建阶段可能无法导入模块，记录警告但不退出
-    if __name__ != "__main__":
-        # 只在导入时输出警告，不在主脚本运行时
-        print(f"Warning: Import failed in build phase: {e}")
-    else:
-        # 作为主脚本运行时，重新抛出错误
-        raise
+logger = logging.getLogger(__name__)
 
 
 def init_customer_tables():
