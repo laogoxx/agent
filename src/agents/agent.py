@@ -7,9 +7,8 @@ from langchain_openai import ChatOpenAI
 from langgraph.graph import MessagesState
 from langgraph.graph.message import add_messages
 from langchain_core.messages import AnyMessage, SystemMessage, HumanMessage, AIMessage
-from coze_coding_utils.runtime_ctx.context import default_headers, new_context
 from storage.memory.memory_saver import get_memory_saver
-from tools.pdf_generator import generate_opc_pdf
+from tools.pdf_generator_simple import generate_opc_pdf_simple
 from tools.simple_payment import SIMPLE_PAYMENT_TOOLS
 from tools.wechat_group_info import get_wechat_group_info
 from tools.customer_db_tools import (
@@ -86,12 +85,12 @@ def build_agent(ctx=None):
                 "type": cfg['config'].get('thinking', 'disabled')
             }
         },
-        default_headers=default_headers(ctx) if ctx else {}
+        default_headers={}  # 生产环境不需要特殊的 headers
     )
 
     # 导入所有工具
     tools = [
-        generate_opc_pdf,
+        generate_opc_pdf_simple,  # 使用简化版 PDF 生成工具
         *SIMPLE_PAYMENT_TOOLS,  # 添加收款工具（get_payment_qrcode, confirm_payment）
         get_wechat_group_info,
         # 数据库工具
