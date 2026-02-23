@@ -28,13 +28,19 @@ def get_db_url() -> str:
     print(f"[DEBUG] Retrieved URL (first 50 chars): {url[:50] if url else 'Empty'}")
 
     if url:
+        # 确保使用 psycopg 驱动而不是 psycopg2
+        if url.startswith('postgresql://'):
+            url = url.replace('postgresql://', 'postgresql+psycopg://', 1)
+        elif url.startswith('postgres://'):
+            url = url.replace('postgres://', 'postgresql+psycopg://', 1)
+        
+        print(f"[DEBUG] Final URL (first 50 chars): {url[:50]}")
         return url
 
     # 如果没有环境变量，尝试从其他来源获取（可选）
     print("[ERROR] DATABASE_URL or PGDATABASE_URL is not set")
     logger.error("DATABASE_URL or PGDATABASE_URL is not set")
     raise ValueError("DATABASE_URL or PGDATABASE_URL is not set")
-
 _engine = None
 _SessionLocal = None
 
