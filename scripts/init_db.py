@@ -36,14 +36,6 @@ from storage.database.customer_models import Base
 import logging
 
 logger = logging.getLogger(__name__)
-except ImportError as e:
-    # 构建阶段可能无法导入模块，记录警告但不退出
-    if __name__ != "__main__":
-        # 只在导入时输出警告，不在主脚本运行时
-        print(f"Warning: Import failed in build phase: {e}")
-    else:
-        # 作为主脚本运行时，重新抛出错误
-        raise
 
 
 def init_customer_tables():
