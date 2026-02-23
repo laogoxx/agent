@@ -12,6 +12,13 @@ from storage.memory.memory_saver import get_memory_saver
 from tools.pdf_generator import generate_opc_pdf
 from tools.simple_payment import SIMPLE_PAYMENT_TOOLS
 from tools.wechat_group_info import get_wechat_group_info
+from tools.customer_db_tools import (
+    save_user_info,
+    save_payment_and_pdf,
+    mark_user_joined_group,
+    get_customer_info,
+    save_recommendations
+)
 
 logger = logging.getLogger(__name__)
 
@@ -86,7 +93,13 @@ def build_agent(ctx=None):
     tools = [
         generate_opc_pdf,
         *SIMPLE_PAYMENT_TOOLS,  # 添加收款工具（get_payment_qrcode, confirm_payment）
-        get_wechat_group_info
+        get_wechat_group_info,
+        # 数据库工具
+        save_user_info,
+        save_payment_and_pdf,
+        mark_user_joined_group,
+        get_customer_info,
+        save_recommendations
     ]
 
     return create_agent(
