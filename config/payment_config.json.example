@@ -1,0 +1,11 @@
+{
+    "wechat_pay": {
+        "mchid": "你的商户号",
+        "appid": "你的应用ID",
+        "apiv3_key": "你的APIv3密钥",
+        "cert_serial_no": "你的证书序列号",
+        "private_key_path": "config/certs/apiclient_key.pem",
+        "cert_dir": "config/certs",
+        "notify_url": "https://your-domain.com/api/pay/notify"
+    }
+}
