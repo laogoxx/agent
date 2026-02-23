@@ -1,1 +1,1 @@
-web: bash .render/start.sh
+web: python src/main_flask.py
