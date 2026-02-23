@@ -151,5 +151,3 @@ xlsxwriter==3.2.9
 xxhash==3.6.0
 yarl==1.22.0
 zstandard==0.25.0
-qrcode==7.4.2
-wechatpayv3==1.2.52
