@@ -9,9 +9,9 @@ langchain-openai==1.0.1
 langgraph-checkpoint==3.0.0
 langgraph-checkpoint-postgres==3.0.1
 
-# 数据库
+# 数据库（使用 psycopg 3.x，支持 Python 3.14）
 SQLAlchemy==2.0.44
-psycopg2-binary==2.9.9
+psycopg>=3.0.0
 
 # 环境变量
 python-dotenv==1.2.1
