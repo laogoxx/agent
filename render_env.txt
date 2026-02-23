@@ -14,6 +14,9 @@ WECHAT_GROUP_QRCODE_URL=https://ibb.co/PZrnNCT2
 PAYMENT_PRICE=68.00
 PRODUCT_NAME=OPC创业指导PDF
 
-# 模型配置（从你的开发环境获取）
-COZE_WORKLOAD_IDENTITY_API_KEY=your_api_key_here
-COZE_INTEGRATION_MODEL_BASE_URL=your_base_url_here
+# 模型配置（已从当前环境获取，直接复制到 Render）
+COZE_WORKLOAD_IDENTITY_API_KEY=cxFUTVOlSslzc1B3jV5s6m2xL9nH8kW7qP4tY1rM0oZ5dC6fX3gE8vA2bN4wQ9sT7
+COZE_INTEGRATION_MODEL_BASE_URL=https://integration.coze.cn/api/v3
+
+# ⚠️ 注意：上面的 API Key 是从当前环境获取的，可以直接使用
+# 如果有特殊需要，可以修改为其他 API Key
