@@ -104,93 +104,6 @@ def index():
                 background: rgba(255, 255, 255, 0.3);
                 transform: scale(1.05);
             }
-            .success-cases-carousel {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                padding: 20px;
-                margin-bottom: 20px;
-                border-radius: 15px;
-                overflow: hidden;
-            }
-            .carousel-container {
-                position: relative;
-            }
-            .carousel-track {
-                display: flex;
-                transition: transform 0.5s ease-in-out;
-            }
-            .carousel-item {
-                min-width: 100%;
-                padding: 0 10px;
-            }
-            .carousel-card {
-                background: white;
-                border-radius: 12px;
-                padding: 20px;
-                color: #333;
-            }
-            .carousel-card h3 {
-                margin-bottom: 10px;
-                color: #667eea;
-                font-size: 18px;
-            }
-            .carousel-card .case-info {
-                display: flex;
-                gap: 20px;
-                margin-bottom: 15px;
-            }
-            .carousel-card .case-info span {
-                background: #f0f0f0;
-                padding: 5px 12px;
-                border-radius: 15px;
-                font-size: 13px;
-            }
-            .carousel-card .highlight {
-                background: #fff3cd;
-                color: #856404;
-                padding: 10px;
-                border-radius: 8px;
-                margin-bottom: 10px;
-                font-weight: 600;
-            }
-            .carousel-controls {
-                display: flex;
-                justify-content: center;
-                gap: 10px;
-                margin-top: 15px;
-            }
-            .carousel-btn {
-                background: rgba(255, 255, 255, 0.3);
-                border: none;
-                color: white;
-                width: 36px;
-                height: 36px;
-                border-radius: 50%;
-                cursor: pointer;
-                font-size: 16px;
-                transition: all 0.3s;
-            }
-            .carousel-btn:hover {
-                background: rgba(255, 255, 255, 0.5);
-                transform: scale(1.1);
-            }
-            .carousel-indicators {
-                display: flex;
-                justify-content: center;
-                gap: 8px;
-                margin-top: 10px;
-            }
-            .indicator {
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.4);
-                cursor: pointer;
-                transition: all 0.3s;
-            }
-            .indicator.active {
-                background: white;
-                transform: scale(1.2);
-            }
             .guide-tips {
                 background: #e7f3ff;
                 border-left: 4px solid #2196F3;
@@ -455,27 +368,6 @@ def index():
                     padding: 6px 12px;
                     font-size: 12px;
                 }
-                .success-cases-carousel {
-                    padding: 15px;
-                    margin-bottom: 15px;
-                }
-                .carousel-card {
-                    padding: 15px;
-                }
-                .carousel-card h3 {
-                    font-size: 16px;
-                }
-                .carousel-card .case-info {
-                    flex-wrap: wrap;
-                    gap: 8px;
-                }
-                .carousel-card .case-info span {
-                    font-size: 11px;
-                    padding: 4px 10px;
-                }
-                .carousel-card .highlight {
-                    font-size: 13px;
-                }
                 .guide-tips {
                     padding: 12px;
                     margin-bottom: 15px;
@@ -530,12 +422,6 @@ def index():
                 .chat-header h1 {
                     font-size: 16px;
                 }
-                .carousel-card {
-                    padding: 12px;
-                }
-                .carousel-card h3 {
-                    font-size: 14px;
-                }
                 .message-bubble {
                     font-size: 13px;
                 }
@@ -566,75 +452,8 @@ def index():
                     <h4>💡 快速开始</h4>
                     <ul>
                         <li>告诉我你的城市、技能和经验，我会为你定制创业方案</li>
-                        <li>查看成功案例轮播，了解其他人如何实现月入过万</li>
                         <li>点击右上角分享按钮，推荐给有需要的朋友</li>
                     </ul>
-                </div>
-
-                <!-- 成功案例轮播 -->
-                <div class="success-cases-carousel">
-                    <div class="carousel-container">
-                        <div class="carousel-track" id="carouselTrack">
-                            <div class="carousel-item">
-                                <div class="carousel-card">
-                                    <h3>🎯 小张 - AI提示词工程师</h3>
-                                    <div class="case-info">
-                                        <span>30岁</span>
-                                        <span>北京</span>
-                                        <span>程序员转型</span>
-                                    </div>
-                                    <div class="highlight">✨ 薪资翻3倍，月收入3万+</div>
-                                    <p>从程序员转型，利用AI工具帮助企业优化工作流程</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="carousel-card">
-                                    <h3>🎯 小李 - 自媒体达人</h3>
-                                    <div class="case-info">
-                                        <span>28岁</span>
-                                        <span>上海</span>
-                                        <span>财务转型</span>
-                                    </div>
-                                    <div class="highlight">✨ 从0到10万粉丝，月广告收入2万</div>
-                                    <p>分享职场干货，快速积累粉丝，实现副业变现</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="carousel-card">
-                                    <h3>🎯 小王 - 个人IP打造</h3>
-                                    <div class="case-info">
-                                        <span>35岁</span>
-                                        <span>深圳</span>
-                                        <span>销售转型</span>
-                                    </div>
-                                    <div class="highlight">✨ 成功转型创业，年入50万+</div>
-                                    <p>通过短视频打造个人品牌，转型为商业顾问</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="carousel-card">
-                                    <h3>🎯 小陈 - 在线课程</h3>
-                                    <div class="case-info">
-                                        <span>32岁</span>
-                                        <span>杭州</span>
-                                        <span>宝妈创业</span>
-                                    </div>
-                                    <div class="highlight">✨ 副业超过主业，月收入1.5万</div>
-                                    <p>将育儿经验转化为在线课程，帮助更多宝妈</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-controls">
-                        <button class="carousel-btn" onclick="prevSlide()">◀</button>
-                        <button class="carousel-btn" onclick="nextSlide()">▶</button>
-                    </div>
-                    <div class="carousel-indicators" id="carouselIndicators">
-                        <div class="indicator active" onclick="goToSlide(0)"></div>
-                        <div class="indicator" onclick="goToSlide(1)"></div>
-                        <div class="indicator" onclick="goToSlide(2)"></div>
-                        <div class="indicator" onclick="goToSlide(3)"></div>
-                    </div>
                 </div>
 
                 <!-- 欢迎消息 -->
@@ -779,37 +598,6 @@ def index():
                 this.style.height = '52px';
                 this.style.height = Math.min(this.scrollHeight, 150) + 'px';
             });
-
-            // 轮播功能
-            let currentSlide = 0;
-            const totalSlides = 4;
-            const track = document.getElementById('carouselTrack');
-            const indicators = document.querySelectorAll('.indicator');
-
-            function updateCarousel() {
-                track.style.transform = `translateX(-${currentSlide * 100}%)`;
-                indicators.forEach((ind, index) => {
-                    ind.classList.toggle('active', index === currentSlide);
-                });
-            }
-
-            function nextSlide() {
-                currentSlide = (currentSlide + 1) % totalSlides;
-                updateCarousel();
-            }
-
-            function prevSlide() {
-                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                updateCarousel();
-            }
-
-            function goToSlide(index) {
-                currentSlide = index;
-                updateCarousel();
-            }
-
-            // 自动轮播（每5秒切换）
-            setInterval(nextSlide, 5000);
 
             // 分享功能
             function openShareModal() {
