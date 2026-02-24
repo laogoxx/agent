@@ -1,6 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import os
 import sys
+import json
 
 # 添加项目根目录到Python路径
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -89,6 +90,117 @@ def index():
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0.5; }
             }
+            
+            /* 成功案例轮播 */
+            .success-cases {
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                padding: 20px 25px;
+                border-bottom: 2px solid #e9ecef;
+            }
+            .success-cases-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #667eea;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .carousel-container {
+                position: relative;
+                overflow: hidden;
+            }
+            .carousel-track {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+                gap: 15px;
+            }
+            .case-card {
+                min-width: calc(100% - 30px);
+                background: white;
+                border-radius: 12px;
+                padding: 15px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                border-left: 4px solid #667eea;
+            }
+            .case-card h3 {
+                font-size: 16px;
+                color: #333;
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .case-card .highlight {
+                color: #667eea;
+                font-weight: 600;
+            }
+            .case-card .info {
+                font-size: 13px;
+                color: #666;
+                margin-bottom: 8px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .case-card .info span {
+                background: #f0f0f0;
+                padding: 4px 10px;
+                border-radius: 20px;
+            }
+            .case-card .description {
+                font-size: 13px;
+                color: #555;
+                line-height: 1.5;
+            }
+            .carousel-nav {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 12px;
+            }
+            .carousel-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: #ccc;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            .carousel-dot.active {
+                background: #667eea;
+                transform: scale(1.2);
+            }
+            .carousel-arrow {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: rgba(102, 126, 234, 0.9);
+                color: white;
+                border: none;
+                font-size: 16px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s;
+                z-index: 10;
+            }
+            .carousel-arrow:hover {
+                background: #5568d3;
+                transform: translateY(-50%) scale(1.1);
+            }
+            .carousel-arrow.prev {
+                left: 5px;
+            }
+            .carousel-arrow.next {
+                right: 5px;
+            }
+            
+            /* 聊天消息区域 */
             .chat-messages {
                 flex: 1;
                 overflow-y: auto;
@@ -145,8 +257,61 @@ def index():
                 border-radius: 4px;
                 font-size: 14px;
             }
+            
+            /* 引导式提问 */
+            .guided-questions {
+                padding: 15px 25px 5px 25px;
+                background: white;
+            }
+            .guided-questions-title {
+                font-size: 13px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 500;
+            }
+            .question-buttons {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            .question-button {
+                flex: 1;
+                min-width: 280px;
+                padding: 12px 15px;
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                border: 2px solid #e9ecef;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: all 0.3s;
+                text-align: left;
+            }
+            .question-button:hover {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-color: #667eea;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            }
+            .question-button .title {
+                font-size: 14px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 4px;
+            }
+            .question-button:hover .title {
+                color: white;
+            }
+            .question-button .hint {
+                font-size: 12px;
+                color: #666;
+                line-height: 1.4;
+            }
+            .question-button:hover .hint {
+                color: rgba(255, 255, 255, 0.9);
+            }
+            
+            /* 聊天输入区域 */
             .chat-input-area {
-                padding: 20px 25px;
+                padding: 15px 25px 20px 25px;
                 background: white;
                 border-top: 2px solid #e9ecef;
             }
@@ -235,21 +400,22 @@ def index():
                 </div>
             </div>
 
+            <div class="success-cases">
+                <div class="success-cases-title">
+                    <span>🏆</span>
+                    <span>成功案例</span>
+                </div>
+                <div class="carousel-container" id="carousel">
+                    <button class="carousel-arrow prev" onclick="prevSlide()">&#10094;</button>
+                    <div class="carousel-track" id="carouselTrack"></div>
+                    <button class="carousel-arrow next" onclick="nextSlide()">&#10095;</button>
+                </div>
+                <div class="carousel-nav" id="carouselNav"></div>
+            </div>
+
             <div class="chat-messages" id="chatMessages">
                 <div class="message assistant">
-                    <div class="message-bubble">
-                        你好！我是OPC超级个体孵化助手。我们深度研究了100个超级个体成功案例，并针对全国主要城市的市场环境进行了充分调研。基于这些数据和经验，我可以为你推荐最适合的创业方向，并提供资源对接孵化群的持续支持。<br><br>
-                        为了给你精准匹配创业项目，请告诉我以下信息：<br><br>
-                        1. 你的常住地址或计划创业的城市是哪里？<br>
-                        2. 你拥有哪些专业技能？比如编程、设计、写作、营销、摄影等？<br>
-                        3. 能简单介绍一下你的工作经验吗？包括所在行业、职位和工作年限？<br>
-                        4. 你的个人兴趣和爱好是什么？比如是否喜欢内容创作、手工制作、社交活动等？<br><br>
-                        💡 你也可以直接告诉我你想了解的内容，比如：<br>
-                        - "我想做XX类型的创业"<br>
-                        - "帮我推荐适合我的创业项目"<br>
-                        - "我想了解AI工具推荐"<br><br>
-                        期待你的回复！
-                    </div>
+                    <div class="message-bubble" id="welcomeMessage"></div>
                 </div>
             </div>
 
@@ -257,6 +423,20 @@ def index():
                 <span></span>
                 <span></span>
                 <span></span>
+            </div>
+
+            <div class="guided-questions">
+                <div class="guided-questions-title">💡 不知从何开始？试试这些：</div>
+                <div class="question-buttons">
+                    <button class="question-button" onclick="sendQuickMessage('我每天加班到深夜，工资却涨得慢。想改变但不知道从哪里开始...')">
+                        <div class="title">😰 职场焦虑</div>
+                        <div class="hint">我每天加班到深夜，工资却涨得慢。想改变但不知道从哪里开始...</div>
+                    </button>
+                    <button class="question-button" onclick="sendQuickMessage('我有写作/设计/编程等技能，想利用业余时间做副业增收...')">
+                        <div class="title">💡 技能变现</div>
+                        <div class="hint">我有写作/设计/编程等技能，想利用业余时间做副业增收...</div>
+                    </button>
+                </div>
             </div>
 
             <div class="chat-input-area">
@@ -280,6 +460,100 @@ def index():
             const messageInput = document.getElementById('messageInput');
             const sendButton = document.getElementById('sendButton');
             const typingIndicator = document.getElementById('typingIndicator');
+            
+            // 成功案例轮播
+            let successCases = [];
+            let currentSlide = 0;
+            let autoSlideInterval;
+
+            async function loadSuccessCases() {
+                try {
+                    const response = await fetch('/api/success-cases');
+                    successCases = await response.json();
+                    renderCarousel();
+                    startAutoSlide();
+                } catch (error) {
+                    console.error('加载成功案例失败:', error);
+                }
+            }
+
+            function renderCarousel() {
+                const track = document.getElementById('carouselTrack');
+                const nav = document.getElementById('carouselNav');
+                
+                // 渲染案例卡片
+                track.innerHTML = successCases.map(caseItem => `
+                    <div class="case-card">
+                        <h3>
+                            <span class="highlight">${caseItem.name}</span>
+                            <span style="font-weight: normal; font-size: 14px; color: #666;">| ${caseItem.age}岁</span>
+                        </h3>
+                        <div class="info">
+                            <span>🔄 ${caseItem.before} → ${caseItem.after}</span>
+                            <span>💰 ${caseItem.income}</span>
+                            <span>📍 ${caseItem.city}</span>
+                            <span>⏱️ ${caseItem.period}</span>
+                        </div>
+                        <div class="description">${caseItem.description}</div>
+                    </div>
+                `).join('');
+                
+                // 渲染导航点
+                nav.innerHTML = successCases.map((_, index) => `
+                    <div class="carousel-dot ${index === currentSlide ? 'active' : ''}" onclick="goToSlide(${index})"></div>
+                `).join('');
+                
+                updateCarouselPosition();
+            }
+
+            function updateCarouselPosition() {
+                const track = document.getElementById('carouselTrack');
+                const dots = document.querySelectorAll('.carousel-dot');
+                const cardWidth = track.children[0].offsetWidth + 15; // 卡片宽度 + gap
+                track.style.transform = `translateX(-${currentSlide * cardWidth}px)`;
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % successCases.length;
+                updateCarouselPosition();
+                resetAutoSlide();
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + successCases.length) % successCases.length;
+                updateCarouselPosition();
+                resetAutoSlide();
+            }
+
+            function goToSlide(index) {
+                currentSlide = index;
+                updateCarouselPosition();
+                resetAutoSlide();
+            }
+
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(nextSlide, 5000);
+            }
+
+            function resetAutoSlide() {
+                clearInterval(autoSlideInterval);
+                startAutoSlide();
+            }
+
+            // 加载欢迎消息
+            async function loadWelcomeMessage() {
+                try {
+                    const response = await fetch('/api/welcome');
+                    const data = await response.json();
+                    document.getElementById('welcomeMessage').innerHTML = data.message.replace(/\\n/g, '<br>');
+                } catch (error) {
+                    console.error('加载欢迎消息失败:', error);
+                }
+            }
 
             function addMessage(content, isUser) {
                 const messageDiv = document.createElement('div');
@@ -302,6 +576,11 @@ def index():
 
             function hideTyping() {
                 typingIndicator.classList.remove('active');
+            }
+
+            function sendQuickMessage(message) {
+                messageInput.value = message;
+                sendMessage();
             }
 
             async function sendMessage() {
@@ -356,6 +635,12 @@ def index():
                 this.style.height = '52px';
                 this.style.height = Math.min(this.scrollHeight, 150) + 'px';
             });
+
+            // 初始化
+            window.onload = function() {
+                loadSuccessCases();
+                loadWelcomeMessage();
+            };
         </script>
     </body>
     </html>
@@ -394,12 +679,30 @@ def chat():
             'error': str(e)
         }), 500
 
+@app.route('/api/success-cases', methods=['GET'])
+def get_success_cases():
+    """获取成功案例"""
+    try:
+        cases_path = os.path.join(os.path.dirname(__file__), '..', 'assets', 'success_cases.json')
+        with open(cases_path, 'r', encoding='utf-8') as f:
+            cases = json.load(f)
+        return jsonify(cases)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/welcome', methods=['GET'])
+def get_welcome():
+    """获取欢迎消息"""
+    try:
+        from agents.agent import get_welcome_message
+        return jsonify({'message': get_welcome_message()})
+    except Exception as e:
+        return jsonify({'message': '你好！我是OPC超级个体孵化助手。'}), 500
+
 @app.route('/api/health')
 def health():
     """健康检查"""
     return jsonify({'status': 'ok', 'service': 'opc-agent'})
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    # 生产环境：关闭调试模式，使用多线程
-    app.run(host='0.0.0.0', port=port, debug=False, threaded=True)
+    app.run(host='0.0.0.0', port=5000, debug=False)

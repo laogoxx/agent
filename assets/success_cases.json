@@ -1,0 +1,91 @@
+[
+  {
+    "name": "小张",
+    "age": 30,
+    "before": "程序员",
+    "after": "AI提示词工程师",
+    "income": "月收入3万+",
+    "city": "北京",
+    "period": "4个月",
+    "description": "从程序员转型，利用AI工具帮助企业优化工作流程",
+    "highlight": "薪资翻3倍"
+  },
+  {
+    "name": "小李",
+    "age": 28,
+    "before": "财务",
+    "after": "自媒体账号",
+    "income": "月广告收入2万",
+    "followers": "粉丝10万",
+    "city": "上海",
+    "period": "6个月",
+    "description": "分享职场干货，快速积累粉丝，实现副业变现",
+    "highlight": "从0到10万粉丝"
+  },
+  {
+    "name": "小王",
+    "age": 35,
+    "before": "传统销售",
+    "after": "个人IP打造",
+    "income": "年入50万+",
+    "city": "深圳",
+    "period": "8个月",
+    "description": "通过短视频打造个人品牌，转型为商业顾问",
+    "highlight": "成功转型创业"
+  },
+  {
+    "name": "小陈",
+    "age": 32,
+    "before": "普通宝妈",
+    "after": "在线课程",
+    "income": "月收入1.5万",
+    "city": "杭州",
+    "period": "5个月",
+    "description": "将育儿经验转化为在线课程，帮助更多宝妈",
+    "highlight": "副业超过主业"
+  },
+  {
+    "name": "小赵",
+    "age": 27,
+    "before": "平面设计师",
+    "after": "AI设计工作室",
+    "income": "月收入2.5万",
+    "city": "成都",
+    "period": "3个月",
+    "description": "结合AI工具，提供高效的商业设计服务",
+    "highlight": "效率提升10倍"
+  },
+  {
+    "name": "小林",
+    "age": 33,
+    "before": "英语老师",
+    "after": "英语知识付费",
+    "income": "月收入3.5万",
+    "city": "广州",
+    "period": "7个月",
+    "description": "开发英语学习课程，通过知识付费平台变现",
+    "highlight": "知识付费变现"
+  },
+  {
+    "name": "小周",
+    "age": 29,
+    "before": "电商运营",
+    "after": "跨境电商独立站",
+    "income": "月收入4万",
+    "city": "苏州",
+    "period": "10个月",
+    "description": "打造跨境电商独立站，实现自由职业梦想",
+    "highlight": "逃离996"
+  },
+  {
+    "name": "小吴",
+    "age": 31,
+    "before": "新媒体编辑",
+    "after": "内容创作者",
+    "income": "月收入2万",
+    "city": "武汉",
+    "period": "4个月",
+    "description": "专注垂直领域内容创作，实现多元化变现",
+    "highlight": "多元化收入"
+  }
+]
