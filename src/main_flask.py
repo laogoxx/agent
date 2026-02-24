@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 import os
 import sys
 import json
@@ -8,6 +8,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from agents.agent import build_agent
 from langgraph.checkpoint.memory import MemorySaver
+from tools.share_tool import generate_share_poster, get_share_text
 
 app = Flask(__name__)
 
@@ -59,6 +60,7 @@ def index():
                 flex-direction: column;
                 height: 90vh;
                 max-height: 800px;
+                position: relative;
             }
             .chat-header {
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -66,6 +68,7 @@ def index():
                 padding: 20px 25px;
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
                 gap: 15px;
             }
             .chat-header h1 {
@@ -89,6 +92,23 @@ def index():
             @keyframes pulse {
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0.5; }
+            }
+            .share-button {
+                background: rgba(255, 255, 255, 0.2);
+                border: none;
+                color: white;
+                padding: 8px 16px;
+                border-radius: 20px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: all 0.3s;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .share-button:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: translateY(-2px);
             }
             
             /* 成功案例轮播 */
@@ -388,15 +408,162 @@ def index():
                 0%, 60%, 100% { transform: translateY(0); }
                 30% { transform: translateY(-10px); }
             }
+            
+            /* 分享弹窗 */
+            .share-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+            }
+            .share-modal.active {
+                display: flex;
+            }
+            .share-modal-content {
+                background: white;
+                border-radius: 20px;
+                padding: 30px;
+                max-width: 500px;
+                width: 100%;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                animation: slideUp 0.3s ease-out;
+            }
+            @keyframes slideUp {
+                from { transform: translateY(50px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            .share-modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 25px;
+            }
+            .share-modal-header h2 {
+                font-size: 24px;
+                color: #333;
+            }
+            .share-close-button {
+                background: none;
+                border: none;
+                font-size: 28px;
+                color: #999;
+                cursor: pointer;
+                transition: color 0.3s;
+            }
+            .share-close-button:hover {
+                color: #333;
+            }
+            .share-section {
+                margin-bottom: 25px;
+            }
+            .share-section-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #667eea;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .share-qr-preview {
+                background: #f8f9fa;
+                border-radius: 12px;
+                padding: 20px;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            .share-qr-preview img {
+                max-width: 100%;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+            .share-buttons {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            .share-action-button {
+                flex: 1;
+                min-width: 120px;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 25px;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            }
+            .share-action-button.primary {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+            }
+            .share-action-button.secondary {
+                background: #f8f9fa;
+                color: #667eea;
+                border: 2px solid #667eea;
+            }
+            .share-action-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            }
+            .share-link-box {
+                background: #f8f9fa;
+                border: 2px solid #e9ecef;
+                border-radius: 12px;
+                padding: 15px;
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+            .share-link-text {
+                flex: 1;
+                font-size: 14px;
+                color: #555;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .share-text-box {
+                background: #f8f9fa;
+                border: 2px solid #e9ecef;
+                border-radius: 12px;
+                padding: 15px;
+                max-height: 150px;
+                overflow-y: auto;
+            }
+            .share-text-content {
+                font-size: 14px;
+                color: #555;
+                line-height: 1.6;
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
         </style>
     </head>
     <body>
         <div class="chat-container">
             <div class="chat-header">
                 <h1>🚀 OPC 超级个体孵化助手</h1>
-                <div class="status">
-                    <div class="status-dot"></div>
-                    <span>在线</span>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="status">
+                        <div class="status-dot"></div>
+                        <span>在线</span>
+                    </div>
+                    <button class="share-button" onclick="openShareModal()">
+                        <span>📤</span>
+                        <span>分享</span>
+                    </button>
                 </div>
             </div>
 
@@ -455,6 +622,53 @@ def index():
             </div>
         </div>
 
+        <!-- 分享弹窗 -->
+        <div class="share-modal" id="shareModal" onclick="closeShareModalOutside(event)">
+            <div class="share-modal-content" onclick="event.stopPropagation()">
+                <div class="share-modal-header">
+                    <h2>📤 分享给朋友</h2>
+                    <button class="share-close-button" onclick="closeShareModal()">&times;</button>
+                </div>
+
+                <div class="share-section">
+                    <div class="share-section-title">📱 二维码分享图片</div>
+                    <div class="share-qr-preview">
+                        <img id="shareQrImage" src="" alt="分享二维码">
+                    </div>
+                    <div class="share-buttons">
+                        <button class="share-action-button primary" onclick="downloadQrImage()">
+                            <span>⬇️</span>
+                            <span>下载图片</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="share-section">
+                    <div class="share-section-title">🔗 分享链接</div>
+                    <div class="share-link-box">
+                        <div class="share-link-text" id="shareLinkText">https://opc-agent.onrender.com</div>
+                        <button class="share-action-button secondary" onclick="copyLink()">
+                            <span>📋</span>
+                            <span>复制</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="share-section">
+                    <div class="share-section-title">📝 分享文案</div>
+                    <div class="share-text-box">
+                        <div class="share-text-content" id="shareTextContent"></div>
+                    </div>
+                    <div class="share-buttons" style="margin-top: 15px;">
+                        <button class="share-action-button primary" onclick="copyShareText()">
+                            <span>📋</span>
+                            <span>复制文案</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             const chatMessages = document.getElementById('chatMessages');
             const messageInput = document.getElementById('messageInput');
@@ -509,7 +723,7 @@ def index():
             function updateCarouselPosition() {
                 const track = document.getElementById('carouselTrack');
                 const dots = document.querySelectorAll('.carousel-dot');
-                const cardWidth = track.children[0].offsetWidth + 15; // 卡片宽度 + gap
+                const cardWidth = track.children[0].offsetWidth + 15;
                 track.style.transform = `translateX(-${currentSlide * cardWidth}px)`;
                 
                 dots.forEach((dot, index) => {
@@ -553,6 +767,68 @@ def index():
                 } catch (error) {
                     console.error('加载欢迎消息失败:', error);
                 }
+            }
+
+            // 分享功能
+            let shareData = null;
+
+            async function openShareModal() {
+                try {
+                    // 加载分享数据
+                    if (!shareData) {
+                        const response = await fetch('/api/share');
+                        shareData = await response.json();
+                    }
+                    
+                    // 更新UI
+                    document.getElementById('shareQrImage').src = shareData.qr_image;
+                    document.getElementById('shareLinkText').textContent = shareData.link;
+                    document.getElementById('shareTextContent').textContent = shareData.text;
+                    
+                    // 显示弹窗
+                    document.getElementById('shareModal').classList.add('active');
+                } catch (error) {
+                    console.error('加载分享数据失败:', error);
+                    alert('加载分享数据失败，请重试');
+                }
+            }
+
+            function closeShareModal() {
+                document.getElementById('shareModal').classList.remove('active');
+            }
+
+            function closeShareModalOutside(event) {
+                if (event.target === document.getElementById('shareModal')) {
+                    closeShareModal();
+                }
+            }
+
+            function downloadQrImage() {
+                const img = document.getElementById('shareQrImage');
+                const link = document.createElement('a');
+                link.href = img.src;
+                link.download = 'opc-agent-share.png';
+                link.click();
+            }
+
+            function copyLink() {
+                const linkText = document.getElementById('shareLinkText').textContent;
+                navigator.clipboard.writeText(linkText).then(() => {
+                    alert('链接已复制到剪贴板！');
+                }).catch(err => {
+                    console.error('复制失败:', err);
+                    alert('复制失败，请手动复制');
+                });
+            }
+
+            function copyShareText() {
+                const shareText = document.getElementById('shareTextContent').textContent;
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('分享文案已复制到剪贴板！');
+                }).catch(err => {
+                    console.error('复制失败:', err);
+                    alert('复制失败，请手动复制');
+                });
             }
 
             function addMessage(content, isUser) {
@@ -698,6 +974,29 @@ def get_welcome():
         return jsonify({'message': get_welcome_message()})
     except Exception as e:
         return jsonify({'message': '你好！我是OPC超级个体孵化助手。'}), 500
+
+@app.route('/api/share', methods=['GET'])
+def get_share():
+    """获取分享数据（二维码和文案）"""
+    try:
+        # 获取分享链接
+        share_url = request.host_url if request.host_url else "https://opc-agent.onrender.com"
+        
+        # 生成二维码图片
+        qr_image = generate_share_poster(share_url)
+        
+        # 获取分享文案
+        share_texts = get_share_text(share_url)
+        
+        return jsonify({
+            'link': share_url,
+            'qr_image': qr_image,
+            'text': share_texts['wechat_friend']  # 默认使用微信好友文案
+        })
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/health')
 def health():
