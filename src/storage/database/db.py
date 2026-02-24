@@ -98,7 +98,9 @@ def get_sessionmaker():
 
 
 def get_session():
-    return get_sessionmaker()
+    """获取一个新的数据库 Session 实例（支持上下文管理器）"""
+    SessionLocal = get_sessionmaker()
+    return SessionLocal()
 
 
 __all__ = [
