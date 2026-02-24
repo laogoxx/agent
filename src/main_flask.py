@@ -427,6 +427,120 @@ def index():
                 0%, 60%, 100% { transform: translateY(0); }
                 30% { transform: translateY(-10px); }
             }
+
+            /* 移动端适配 */
+            @media screen and (max-width: 768px) {
+                body {
+                    padding: 10px;
+                }
+                .chat-container {
+                    height: 100vh;
+                    max-height: none;
+                    border-radius: 0;
+                }
+                .chat-header {
+                    padding: 15px;
+                }
+                .chat-header h1 {
+                    font-size: 18px;
+                }
+                .chat-header .status {
+                    font-size: 12px;
+                }
+                .share-button {
+                    padding: 6px 12px;
+                    font-size: 12px;
+                }
+                .success-cases-carousel {
+                    padding: 15px;
+                    margin-bottom: 15px;
+                }
+                .carousel-card {
+                    padding: 15px;
+                }
+                .carousel-card h3 {
+                    font-size: 16px;
+                }
+                .carousel-card .case-info {
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
+                .carousel-card .case-info span {
+                    font-size: 11px;
+                    padding: 4px 10px;
+                }
+                .carousel-card .highlight {
+                    font-size: 13px;
+                }
+                .guide-tips {
+                    padding: 12px;
+                    margin-bottom: 15px;
+                }
+                .guide-tips h4 {
+                    font-size: 14px;
+                }
+                .guide-tips li {
+                    font-size: 12px;
+                }
+                .chat-messages {
+                    padding: 15px;
+                }
+                .message {
+                    margin-bottom: 15px;
+                }
+                .message .avatar {
+                    width: 32px;
+                    height: 32px;
+                    font-size: 14px;
+                }
+                .message-bubble {
+                    padding: 12px 15px;
+                    font-size: 14px;
+                    line-height: 1.5;
+                }
+                .message.user .message-bubble {
+                    max-width: 75%;
+                }
+                .message.assistant .message-bubble {
+                    max-width: 85%;
+                }
+                .chat-input-area {
+                    padding: 10px 15px;
+                }
+                .chat-input {
+                    font-size: 14px;
+                    padding: 12px 15px;
+                }
+                .send-button {
+                    width: 44px;
+                    height: 44px;
+                    font-size: 18px;
+                }
+                .typing-indicator {
+                    padding: 10px 15px;
+                }
+            }
+
+            /* 超小屏幕适配（手机横屏或小屏手机） */
+            @media screen and (max-width: 480px) {
+                .chat-header h1 {
+                    font-size: 16px;
+                }
+                .carousel-card {
+                    padding: 12px;
+                }
+                .carousel-card h3 {
+                    font-size: 14px;
+                }
+                .message-bubble {
+                    font-size: 13px;
+                }
+                .chat-input {
+                    font-size: 13px;
+                    padding: 10px 12px;
+                }
+            }
+        </style>
         </style>
     </head>
     <body>
