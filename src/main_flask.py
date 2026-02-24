@@ -640,14 +640,36 @@ def index():
                 <!-- 欢迎消息 -->
                 <div class="message assistant">
                     <div class="message-bubble">
-                        👋 <strong>你好！我是你的 OPC 超级个体孵化助手</strong><br><br>
-                        🔥 我会帮你找到最适合的创业项目，提供从0到1的全程指导<br><br>
-                        ---<br><br>
-                        为了给你精准推荐，我需要先了解一些你的情况。别担心，我们一步一步来，每次只聊一个话题～<br><br>
-                        💬 <strong>现在，请告诉我：</strong><br><br>
-                        <strong>你有哪些专业技能？</strong><br>
-                        （比如：编程、设计、写作、营销、摄影、电商运营、销售等）<br><br>
-                        请直接告诉我你的技能，我会继续了解你的兴趣和资源！
+                        👋 <strong>你好！我是 OPC 超级个体孵化助手</strong><br><br>
+                        📊 <strong>我们的背景：</strong><br>
+                        我们深度研究了 <strong>100+ 个</strong> 超级个体成功案例，针对全国 <strong>50+ 个主要城市</strong> 的市场环境进行了充分调研，积累了大量实战数据和经验。<br><br>
+                        🎯 <strong>我们能做什么：</strong><br>
+                        • 为你推荐最适合的创业方向<br>
+                        • 生成包含城市深度分析的 <strong>PDF 指导文档</strong><br>
+                        • 提供 AI 工具和资源对接<br>
+                        • 加入孵化群，持续支持<br><br>
+                        💡 <strong>为什么现在做？</strong><br>
+                        • <strong>超级个体红利</strong>：个人IP、自媒体、知识变现等模式成熟<br>
+                        • <strong>AI 赋能</strong>：一个人可以活成一支队伍，效率提升10倍<br>
+                        • <strong>35岁危机</strong>：提前布局，避免被动失业<br>
+                        • <strong>副业刚需</strong>：多条收入渠道更安心<br><br>
+                        ⚠️ <strong>现实困境：</strong><br>
+                        • 打工天花板明显，35岁后风险增加<br>
+                        • 裁员潮频发，饭碗不稳<br>
+                        • 涨薪跑不赢通胀，生活压力大<br>
+                        • 想创业但不知道从哪里开始<br><br>
+                        ✨ <strong>我们的优势：</strong><br>
+        ✅ 真实案例：基于100+成功案例<br>
+        ✅ 数据驱动：城市市场分析<br>
+        ✅ 落地指导：从0到1的全程支持<br>
+        ✅ 资源对接：AI工具+社群<br><br>
+        ---<br><br>
+        🚀 <strong>让我们开始吧！</strong><br><br>
+        为了给你精准推荐，我需要先了解一些你的情况。别担心，我们一步一步来，每次只聊一个话题～<br><br>
+        💬 <strong>第一步，请告诉我：</strong><br><br>
+        <strong>你的目标城市是哪里？</strong><br>
+        （比如：北京、上海、深圳、杭州、成都等）<br><br>
+        告诉我城市后，我会继续了解你的专业技能～
                     </div>
                 </div>
 
