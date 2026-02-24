@@ -297,6 +297,7 @@ def index():
                 flex: 1;
                 overflow-y: auto;
                 padding: 25px;
+                padding-bottom: 30px; /* 确保底部有留白 */
                 background: #f8f9fa;
             }
             .message {
@@ -358,6 +359,8 @@ def index():
                 display: flex;
                 gap: 12px;
                 align-items: flex-end;
+                flex-wrap: nowrap;
+                width: 100%;
             }
             .chat-input {
                 flex: 1;
@@ -371,6 +374,7 @@ def index():
                 transition: border-color 0.3s;
                 min-height: 52px;
                 max-height: 150px;
+                width: 0; /* 配合 flex: 1 使用，防止内容超出 */
             }
             .chat-input:focus {
                 border-color: #667eea;
