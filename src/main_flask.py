@@ -89,6 +89,210 @@ def index():
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0.5; }
             }
+            .share-button {
+                background: rgba(255, 255, 255, 0.2);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                color: white;
+                padding: 8px 16px;
+                border-radius: 20px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: all 0.3s;
+                white-space: nowrap;
+            }
+            .share-button:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(1.05);
+            }
+            .success-cases-carousel {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 20px;
+                margin-bottom: 20px;
+                border-radius: 15px;
+                overflow: hidden;
+            }
+            .carousel-container {
+                position: relative;
+            }
+            .carousel-track {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+            }
+            .carousel-item {
+                min-width: 100%;
+                padding: 0 10px;
+            }
+            .carousel-card {
+                background: white;
+                border-radius: 12px;
+                padding: 20px;
+                color: #333;
+            }
+            .carousel-card h3 {
+                margin-bottom: 10px;
+                color: #667eea;
+                font-size: 18px;
+            }
+            .carousel-card .case-info {
+                display: flex;
+                gap: 20px;
+                margin-bottom: 15px;
+            }
+            .carousel-card .case-info span {
+                background: #f0f0f0;
+                padding: 5px 12px;
+                border-radius: 15px;
+                font-size: 13px;
+            }
+            .carousel-card .highlight {
+                background: #fff3cd;
+                color: #856404;
+                padding: 10px;
+                border-radius: 8px;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            .carousel-controls {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 15px;
+            }
+            .carousel-btn {
+                background: rgba(255, 255, 255, 0.3);
+                border: none;
+                color: white;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 16px;
+                transition: all 0.3s;
+            }
+            .carousel-btn:hover {
+                background: rgba(255, 255, 255, 0.5);
+                transform: scale(1.1);
+            }
+            .carousel-indicators {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 10px;
+            }
+            .indicator {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.4);
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            .indicator.active {
+                background: white;
+                transform: scale(1.2);
+            }
+            .guide-tips {
+                background: #e7f3ff;
+                border-left: 4px solid #2196F3;
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 8px;
+            }
+            .guide-tips h4 {
+                color: #1976D2;
+                margin-bottom: 10px;
+                font-size: 15px;
+            }
+            .guide-tips ul {
+                margin: 0;
+                padding-left: 20px;
+            }
+            .guide-tips li {
+                color: #0d47a1;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+            .modal-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                align-items: center;
+                justify-content: center;
+            }
+            .modal-overlay.active {
+                display: flex;
+            }
+            .modal-content {
+                background: white;
+                border-radius: 20px;
+                padding: 30px;
+                max-width: 500px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+            .modal-header h2 {
+                margin: 0;
+                color: #333;
+                font-size: 20px;
+            }
+            .modal-close {
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                color: #999;
+            }
+            .modal-close:hover {
+                color: #333;
+            }
+            .share-poster {
+                margin-bottom: 20px;
+            }
+            .share-poster img {
+                width: 100%;
+                border-radius: 10px;
+            }
+            .share-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .share-btn {
+                padding: 12px 20px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: all 0.3s;
+            }
+            .share-btn.wechat {
+                background: #07c160;
+                color: white;
+            }
+            .share-btn.moment {
+                background: #07c160;
+                color: white;
+            }
+            .share-btn.copy {
+                background: #f0f0f0;
+                color: #333;
+            }
+            .share-btn:hover {
+                opacity: 0.9;
+                transform: scale(1.02);
+            }
             .chat-messages {
                 flex: 1;
                 overflow-y: auto;
@@ -233,9 +437,89 @@ def index():
                     <div class="status-dot"></div>
                     <span>在线</span>
                 </div>
+                <button class="share-button" onclick="openShareModal()">
+                    📤 分享
+                </button>
             </div>
 
             <div class="chat-messages" id="chatMessages">
+                <!-- 引导提示 -->
+                <div class="guide-tips">
+                    <h4>💡 快速开始</h4>
+                    <ul>
+                        <li>告诉我你的城市、技能和经验，我会为你定制创业方案</li>
+                        <li>查看成功案例轮播，了解其他人如何实现月入过万</li>
+                        <li>点击右上角分享按钮，推荐给有需要的朋友</li>
+                    </ul>
+                </div>
+
+                <!-- 成功案例轮播 -->
+                <div class="success-cases-carousel">
+                    <div class="carousel-container">
+                        <div class="carousel-track" id="carouselTrack">
+                            <div class="carousel-item">
+                                <div class="carousel-card">
+                                    <h3>🎯 小张 - AI提示词工程师</h3>
+                                    <div class="case-info">
+                                        <span>30岁</span>
+                                        <span>北京</span>
+                                        <span>程序员转型</span>
+                                    </div>
+                                    <div class="highlight">✨ 薪资翻3倍，月收入3万+</div>
+                                    <p>从程序员转型，利用AI工具帮助企业优化工作流程</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="carousel-card">
+                                    <h3>🎯 小李 - 自媒体达人</h3>
+                                    <div class="case-info">
+                                        <span>28岁</span>
+                                        <span>上海</span>
+                                        <span>财务转型</span>
+                                    </div>
+                                    <div class="highlight">✨ 从0到10万粉丝，月广告收入2万</div>
+                                    <p>分享职场干货，快速积累粉丝，实现副业变现</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="carousel-card">
+                                    <h3>🎯 小王 - 个人IP打造</h3>
+                                    <div class="case-info">
+                                        <span>35岁</span>
+                                        <span>深圳</span>
+                                        <span>销售转型</span>
+                                    </div>
+                                    <div class="highlight">✨ 成功转型创业，年入50万+</div>
+                                    <p>通过短视频打造个人品牌，转型为商业顾问</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="carousel-card">
+                                    <h3>🎯 小陈 - 在线课程</h3>
+                                    <div class="case-info">
+                                        <span>32岁</span>
+                                        <span>杭州</span>
+                                        <span>宝妈创业</span>
+                                    </div>
+                                    <div class="highlight">✨ 副业超过主业，月收入1.5万</div>
+                                    <p>将育儿经验转化为在线课程，帮助更多宝妈</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn" onclick="prevSlide()">◀</button>
+                        <button class="carousel-btn" onclick="nextSlide()">▶</button>
+                    </div>
+                    <div class="carousel-indicators" id="carouselIndicators">
+                        <div class="indicator active" onclick="goToSlide(0)"></div>
+                        <div class="indicator" onclick="goToSlide(1)"></div>
+                        <div class="indicator" onclick="goToSlide(2)"></div>
+                        <div class="indicator" onclick="goToSlide(3)"></div>
+                    </div>
+                </div>
+
+                <!-- 欢迎消息 -->
                 <div class="message assistant">
                     <div class="message-bubble">
                         🔥 2025年，你是否也有这样的焦虑？<br><br>
@@ -389,7 +673,117 @@ def index():
                 this.style.height = '52px';
                 this.style.height = Math.min(this.scrollHeight, 150) + 'px';
             });
+
+            // 轮播功能
+            let currentSlide = 0;
+            const totalSlides = 4;
+            const track = document.getElementById('carouselTrack');
+            const indicators = document.querySelectorAll('.indicator');
+
+            function updateCarousel() {
+                track.style.transform = `translateX(-${currentSlide * 100}%)`;
+                indicators.forEach((ind, index) => {
+                    ind.classList.toggle('active', index === currentSlide);
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarousel();
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+            }
+
+            function goToSlide(index) {
+                currentSlide = index;
+                updateCarousel();
+            }
+
+            // 自动轮播（每5秒切换）
+            setInterval(nextSlide, 5000);
+
+            // 分享功能
+            function openShareModal() {
+                document.getElementById('shareModal').classList.add('active');
+            }
+
+            function closeShareModal() {
+                document.getElementById('shareModal').classList.remove('active');
+            }
+
+            function copyShareText(platform) {
+                const shareTexts = {
+                    wechat: "🚀 OPC 超级个体孵化助手\\n\\n研究发现100个OPC成功案例，\\n10年产品经理打造，帮你定制专属创业方案！\\n\\n立即体验：https://opc-agent.onrender.com",
+                    weibo: "🚀 OPC 超级个体孵化助手\\n\\n研究发现100个OPC成功案例，\\n10年产品经理打造，帮你定制专属创业方案！\\n\\n立即体验：https://opc-agent.onrender.com\\n\\n#OPC创业 #超级个体 #副业增收",
+                    default: "🚀 OPC 超级个体孵化助手\\n\\n研究发现100个OPC成功案例，\\n10年产品经理打造，帮你定制专属创业方案！\\n\\n立即体验：https://opc-agent.onrender.com"
+                };
+
+                const text = shareTexts[platform] || shareTexts.default;
+
+                // 复制到剪贴板
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        alert('文案已复制到剪贴板！');
+                    }).catch(err => {
+                        // 如果clipboard API失败，使用传统方法
+                        const textarea = document.createElement('textarea');
+                        textarea.value = text;
+                        textarea.style.position = 'fixed';
+                        textarea.style.opacity = '0';
+                        document.body.appendChild(textarea);
+                        textarea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textarea);
+                        alert('文案已复制到剪贴板！');
+                    });
+                } else {
+                    // 传统方法
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    alert('文案已复制到剪贴板！');
+                }
+            }
+
+            // 点击模态框外部关闭
+            document.getElementById('shareModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeShareModal();
+                }
+            });
         </script>
+
+        <!-- 分享弹窗 -->
+        <div class="modal-overlay" id="shareModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📤 分享给朋友</h2>
+                    <button class="modal-close" onclick="closeShareModal()">×</button>
+                </div>
+                <div class="share-poster">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%23667eea'/%3E%3Ctext x='50%25' y='40%25' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3E🚀 OPC 超级个体孵化助手%3C/text%3E%3Ctext x='50%25' y='60%25' text-anchor='middle' fill='white' font-size='16' font-family='Arial'%3E扫码立即体验%3C/text%3E%3Crect x='150' y='250' width='100' height='100' fill='white'/%3E%3C/svg%3E" alt="分享海报">
+                </div>
+                <div class="share-actions">
+                    <button class="share-btn wechat" onclick="copyShareText('wechat')">
+                        💬 复制微信分享文案
+                    </button>
+                    <button class="share-btn moment" onclick="copyShareText('weibo')">
+                        📱 复制微博分享文案
+                    </button>
+                    <button class="share-btn copy" onclick="copyShareText('default')">
+                        📋 复制通用文案
+                    </button>
+                </div>
+            </div>
+        </div>
     </body>
     </html>
     """
