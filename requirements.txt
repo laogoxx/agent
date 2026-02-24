@@ -5,6 +5,7 @@ Werkzeug==3.1.3
 # 数据库
 SQLAlchemy==2.0.44
 psycopg>=3.0.0
+psycopg-pool>=3.0.0
 
 # LangChain 和 LangGraph
 langchain==1.0.3
