@@ -326,3 +326,4 @@ def save_recommendations(
 - 联系方式：{contact_info}
 
 推荐项目已保存到数据库，便于后续查询和统计。"""
+
