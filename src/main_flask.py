@@ -264,6 +264,7 @@ def index():
                 font-size: 14px;
             }
             .chat-input-area {
+                width: 100%;
                 padding: 20px 25px;
                 background: white;
                 border-top: 2px solid #e9ecef;
@@ -404,7 +405,9 @@ def index():
                     max-width: 85%;
                 }
                 .chat-input-area {
+                    width: 100%;
                     padding: 10px 15px;
+                    box-sizing: border-box;
                 }
                 .chat-input {
                     font-size: 14px;
