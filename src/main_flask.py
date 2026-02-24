@@ -267,6 +267,7 @@ def index():
                 padding: 20px 25px;
                 background: white;
                 border-top: 2px solid #e9ecef;
+                box-sizing: border-box;
             }
             .chat-input-wrapper {
                 display: flex;
@@ -274,6 +275,8 @@ def index():
                 align-items: flex-end;
                 flex-wrap: nowrap;
                 width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
             }
             .chat-input {
                 flex: 1;
@@ -287,7 +290,7 @@ def index():
                 transition: border-color 0.3s;
                 min-height: 52px;
                 max-height: 150px;
-                width: 0; /* 配合 flex: 1 使用，防止内容超出 */
+                box-sizing: border-box;
             }
             .chat-input:focus {
                 border-color: #667eea;
