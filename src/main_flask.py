@@ -649,19 +649,18 @@ def index():
                         （比如：编程、设计、写作、营销、摄影、电商运营、销售等）<br><br>
                         请直接告诉我你的技能，我会继续了解你的兴趣和资源！
                     </div>
-                </div><br><br>
-
-                    </div>
                 </div>
-            </div>
 
-            <div class="typing-indicator" id="typingIndicator">
-                <span></span>
-                <span></span>
-                <span></span>
             </div>
+        </div>
 
-            <div class="chat-input-area">
+        <div class="typing-indicator" id="typingIndicator">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="chat-input-area">
                 <div class="chat-input-wrapper">
                     <textarea
                         class="chat-input"
