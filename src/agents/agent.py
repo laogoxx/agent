@@ -114,8 +114,17 @@ def get_welcome_message() -> str:
     return WELCOME_MESSAGE
 
 def build_agent(ctx=None):
-    workspace_path = os.getenv("COZE_WORKSPACE_PATH", "/workspace/projects")
-    config_path = os.path.join(workspace_path, LLM_CONFIG)
+    # 使用相对路径，适配不同环境（本地、Render等）
+    # config_path 会相对于当前工作目录解析
+    config_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), LLM_CONFIG)
+
+    # 如果相对路径不存在，尝试从项目根目录读取
+    if not os.path.exists(config_path):
+        config_path = LLM_CONFIG
+
+    logger.info(f"Loading config from: {config_path}")
+    logger.info(f"Current working directory: {os.getcwd()}")
+    logger.info(f"Config file exists: {os.path.exists(config_path)}")
 
     with open(config_path, 'r', encoding='utf-8') as f:
         cfg = json.load(f)
